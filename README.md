@@ -19,6 +19,8 @@ Large language models (LLMs) have demonstrated impressive capabilities across a 
   <img src="img/scm1.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
   <img src="img/scm2.png" alt="" width="270" height="200" style="display: inline-block; margin: 0 1%;" />
   <img src="img/scm3.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
+    <p align="center"><b>Figure: 1</b> Three SCMs illustrate different modes of answer generation in LLMs: (a) direct prompt-to-answer generation without explicit reasoning; (b) standard front-door adjustment for tasks without external knowledge, such as CP and DeCoT; and (c) conditional front-door adjustment for tasks with external knowledge. Both (b) and (c) are integrated into the proposed TACP framework. In all SCMs, \( Q \) denotes the input query, \( R \) denotes the reasoning process (SoT or CoT), \( A \) denotes the final answer, \( U \) denotes the latent confounder, and \( E \) denotes the external knowledge..</p>
+
 </p>
 <br />
 
@@ -26,6 +28,7 @@ Large language models (LLMs) have demonstrated impressive capabilities across a 
 
 <p align="center">
   <img src="img/tokens_vs_accuracy_combined.png" alt="" width="800" height="400" style="display: inline-block; margin: 0 1%;" />
+  <p align="center"><b>Figure: 2</b> Comparison of Token Efficiency of Causal Prompting and TACP on GPT-3.5 (StrategyQA \& HotpotQA).</p>
 </p>
 
 # Environment Detail
