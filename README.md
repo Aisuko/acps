@@ -27,8 +27,20 @@ Large language models (LLMs) have demonstrated impressive capabilities across a 
 <h3>Token Efficiency</h3>
 
 <p align="center">
+  <img src="img/avg_token_sot_cot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_steps_cot_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <p align="center"><b>Figure: 1</b> Comparison of average token/reasoning steps usage between CoT and SoT on identical questions across multiple reasoning tasks.</p>
+</p>
+<br />
+<p align="center">
+  <img src="img/avg_token_casuality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_step_casuality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <p align="center"><b>Figure: 2</b> Comparison of average token/reasoning steps usage between prompting frameworks across all tasks.</p>
+</p>
+<br />
+<p align="center">
   <img src="img/tokens_vs_accuracy_combined.png" alt="" width="800" height="400" style="display: inline-block; margin: 0 1%;" />
-  <p align="center"><b>Figure: 2</b> Comparison of Token Efficiency of Causal Prompting and TACP on GPT-3.5 (StrategyQA \& HotpotQA).</p>
+  <p align="center"><b>Figure: 3</b> Comparison of Token Efficiency of Causal Prompting and TACP on GPT-3.5 (StrategyQA \& HotpotQA).</p>
 </p>
 
 # Environment Detail
