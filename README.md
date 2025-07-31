@@ -43,7 +43,7 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
 </p>
 <br />
 <p align="center">
-  <img src="img/tokens_vs_accuracy_combined.png" alt="" width="800" height="400" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/tokens_vs_accuracy_combined.png" alt="" width="600" height="400" style="display: inline-block; margin: 0 1%;" />
   <p align="center"><b>Figure: 5</b> Comparison of Token Efficiency of Causal Prompting and acps on GPT-3.5 (StrategyQA \& HotpotQA).</p>
 </p>
 <br />
