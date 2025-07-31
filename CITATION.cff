@@ -1,11 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-- family-names: "Li"
-  given-names: "Bowen"
-  orcid: "https://orcid.org/0009-0007-6470-5607"
-- family-names: "Xu"
-  given-names: "Ziqi"
+- family-names: ""
+  given-names: ""
   orcid: ""
 title: "ACPS"
 version: 0.1.0
