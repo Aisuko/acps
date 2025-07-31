@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img src="img/causality_digram.png" alt="" width="900" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/causality_digram.png" alt="" width="800" height="200" style="display: inline-block; margin: 0 1%;" />
 </p>
 
 <h3>Abstract</h3>
@@ -20,9 +20,9 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
 <br />
 
 <p align="center">
-  <img src="img/scm1.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/scm2.png" alt="" width="270" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/scm3.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/scm1.png" alt="" width="150" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/scm2.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/scm3.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
     <p align="center"><b>Figure: 2</b> Three SCMs illustrate different modes of answer generation in LLMs: (a) direct prompt-to-answer generation without explicit reasoning; (b) standard front-door adjustment for tasks without external knowledge, such as CP and DeCoT; and (c) conditional front-door adjustment for tasks with external knowledge. Both (b) and (c) are integrated into the proposed acps framework. In all SCMs, \( Q \) denotes the input query, \( R \) denotes the reasoning process (SoT or CoT), \( A \) denotes the final answer, \( U \) denotes the latent confounder, and \( E \) denotes the external knowledge..</p>
 
 </p>
