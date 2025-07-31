@@ -48,6 +48,17 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
 </p>
 <br />
 
+<h3>Fine-Tuning Metrics</h3>
+
+<p align="center">
+  <img src="img/eval_loss.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/train_loss.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/sts_dev_pearson_cosine.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/sts_dev_spearman_cosine.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
+  <p align="center"><b>Figure: 6</b> Metrics(loss of training, evaluations, dev-pearson/spearson-cosine) for funtuning Encoder experiments</p>
+</p>
+<br />
+
 # Environment Detail
 
 All the code are run inside [Kaggle container `Python 3.11.13` environment](https://github.com/kaggle/docker-python). You can also check the [requirements.txt](./requirements.txt) file.
