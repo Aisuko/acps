@@ -26,7 +26,6 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
     <p align="center"><b>Figure: 2</b> Three SCMs illustrate different modes of answer generation in LLMs: (a) direct prompt-to-answer generation without explicit reasoning; (b) standard front-door adjustment for tasks without external knowledge, such as CP and DeCoT; and (c) conditional front-door adjustment for tasks with external knowledge. Both (b) and (c) are integrated into the proposed acps framework. In all SCMs, \( Q \) denotes the input query, \( R \) denotes the reasoning process (SoT or CoT), \( A \) denotes the final answer, \( U \) denotes the latent confounder, and \( E \) denotes the external knowledge..</p>
 
 </p>
-<br />
 
 <h3>Token Efficiency</h3>
 
@@ -46,7 +45,6 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
   <img src="img/tokens_vs_accuracy_combined.png" alt="" width="600" height="400" style="display: inline-block; margin: 0 1%;" />
   <p align="center"><b>Figure: 5</b> Comparison of Token Efficiency of Causal Prompting and acps on GPT-3.5 (StrategyQA \& HotpotQA).</p>
 </p>
-<br />
 
 <h3>Fine-Tuning Metrics</h3>
 
