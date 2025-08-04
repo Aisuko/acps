@@ -80,6 +80,6 @@ Please check the Citation feature of this repo.
 Under [MIT](./LICENSE).
 
 # Acknowledgement
-* https://github.com/SimonAytes/SoT
+* SoT
 
 Thanks for your contribution.
