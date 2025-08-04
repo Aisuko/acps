@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/Aisuko/acps/blob/main/img/001.png">
+  <a href="">
     <img src="img/001.png" width="30%" /></a><br>
   <b>Debiasing Large Language Models via Adaptive Causal Prompting</b><br>
   <b>with Sketch-of-Thought</b><br>
