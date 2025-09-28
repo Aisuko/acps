@@ -30,19 +30,20 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
 <h3>Token Efficiency</h3>
 
 <p align="center">
-  <img src="img/avg_token_sot_cot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/avg_steps_cot_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_tokens_cot_vs_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_steps_cot_vs_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
   <p align="center"><b>Figure: 3</b> Comparison of average token/reasoning steps usage between CoT and SoT on identical questions across multiple reasoning tasks.</p>
 </p>
 <br />
 <p align="center">
-  <img src="img/avg_token_casuality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/avg_step_casuality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_tokens_causality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/avg_steps_causality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
   <p align="center"><b>Figure: 4</b> Comparison of average token/reasoning steps usage between prompting frameworks across all tasks.</p>
 </p>
 <br />
 <p align="center">
-  <img src="img/tokens_vs_accuracy_combined.png" alt="" width="600" height="400" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/tokens_vs_accuracy_hotpotqa.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/tokens_vs_accuracy_strategyqa.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
   <p align="center"><b>Figure: 5</b> Comparison of Token Efficiency of Causal Prompting and acps on GPT-3.5 (StrategyQA \& HotpotQA).</p>
 </p>
 
@@ -59,7 +60,7 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
 
 # Environment Detail
 
-All the code are run inside [Kaggle container `Python 3.11.13` environment](https://github.com/kaggle/docker-python). You can also check the [requirements.txt](./requirements.txt) file.
+All the code are run inside Kaggle container `Python 3.11.13` environment. You can also check the [requirements.txt](./requirements.txt) file.
 
 # Project Structure
 
@@ -77,7 +78,7 @@ Please check the Citation feature of this repo.
 
 # LICENSE
 
-Under [MIT](./LICENSE).
+[MIT](./LICENSE)
 
 # Acknowledgement
 * SoT
