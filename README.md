@@ -1,62 +1,12 @@
 <h1 align="center">
-  <a href="">
-    <img src="img/001.png" width="30%" /></a><br>
   <b>Debiasing Large Language Models via Adaptive Causal Prompting</b><br>
   <b>with Sketch-of-Thought</b><br>
 </h1>
 
 <p align="center">
-  📚 <a href="">[Paper]</a> |
-  📝 <a href="">[Blog Post]</a> |
-  📂 <a href="">[Drive Folder]</a>
+  <img src="img/causality_digram.png" alt="" width="900" height="150" style="display: inline-block; margin: 0 1%;" />
 </p>
 
-<p align="center">
-  <img src="img/causality_digram.png" alt="" width="800" height="200" style="display: inline-block; margin: 0 1%;" />
-</p>
-
-<h3>Abstract</h3>
-Despite notable advancements in prompting methods for Large Language Models (LLMs), such as Chain-of-Thought, current strategies still suffer from inefficiency due to excessive token usage and limited generalisability across diverse reasoning tasks. To address these limitations, we propose an \textbf{A}daptive \textbf{C}ausal \textbf{P}rompting with \textbf{S}ketch-of-Thought (\textbf{ACPS}) framework, which leverages structural causal modelling to infer query-specific causal dependencies and apply suitable front-door interventions. This enables generalisable causal reasoning across heterogeneous tasks without task-specific retraining. By replacing verbose Chain-of-Thought with concise Sketch-of-Thought, ACPS achieves streamlined reasoning that substantially reduces token usage and inference cost. Extensive experiments on multiple reasoning benchmarks and LLMs demonstrate that ACPS consistently outperforms existing prompting baselines in terms of accuracy, robustness, and computational efficiency.~\footnote{The source code and technical appendix are provided in the Supplementary Material.}
-<br />
-
-<p align="center">
-  <img src="img/scm1.png" alt="" width="150" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/scm2.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/scm3.png" alt="" width="200" height="200" style="display: inline-block; margin: 0 1%;" />
-    <p align="center"><b>Figure: 2</b> Three SCMs illustrate different modes of answer generation in LLMs: (a) direct prompt-to-answer generation without explicit reasoning; (b) standard front-door adjustment for tasks without external knowledge, such as CP and DeCoT; and (c) conditional front-door adjustment for tasks with external knowledge. Both (b) and (c) are integrated into the proposed acps framework. In all SCMs, \( Q \) denotes the input query, \( R \) denotes the reasoning process (SoT or CoT), \( A \) denotes the final answer, \( U \) denotes the latent confounder, and \( E \) denotes the external knowledge..</p>
-
-</p>
-
-<h3>Token Efficiency</h3>
-
-<p align="center">
-  <img src="img/avg_tokens_cot_vs_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/avg_steps_cot_vs_sot.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <p align="center"><b>Figure: 3</b> Comparison of average token/reasoning steps usage between CoT and SoT on identical questions across multiple reasoning tasks.</p>
-</p>
-<br />
-<p align="center">
-  <img src="img/avg_tokens_causality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/avg_steps_causality.png" alt="" width="400" height="200" style="display: inline-block; margin: 0 1%;" />
-  <p align="center"><b>Figure: 4</b> Comparison of average token/reasoning steps usage between prompting frameworks across all tasks.</p>
-</p>
-<br />
-<p align="center">
-  <img src="img/tokens_vs_accuracy_hotpotqa.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/tokens_vs_accuracy_strategyqa.png" alt="" width="300" height="200" style="display: inline-block; margin: 0 1%;" />
-  <p align="center"><b>Figure: 5</b> Comparison of Token Efficiency of Causal Prompting and acps on GPT-3.5 (StrategyQA \& HotpotQA).</p>
-</p>
-
-<h3>Fine-Tuning Metrics</h3>
-
-<p align="center">
-  <img src="img/eval_loss.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/train_loss.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/sts_dev_pearson_cosine.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
-  <img src="img/sts_dev_spearman_cosine.png" alt="" width="250" height="200" style="display: inline-block; margin: 0 1%;" />
-  <p align="center"><b>Figure: 6</b> Metrics(loss of training, evaluations, dev-pearson/spearson-cosine) for funtuning Encoder experiments</p>
-</p>
-<br />
 
 # Environment Detail
 
