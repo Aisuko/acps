@@ -4,7 +4,9 @@
 </h1>
 
 <p align="center">
-  <img src="img/causality_digram.png" alt="" width="900" height="150" style="display: inline-block; margin: 0 1%;" />
+  <img src="img/causality_digram.png"
+       alt="Causality diagram"
+       style="max-width: 100%; height: auto;">
 </p>
 
 
