@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACPS | Adaptive Causal Prompting with Sketch-of-Thought</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+              400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+              800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
+            },
+            accent: {
+              cyan: '#06b6d4', 'cyan-light': '#22d3ee', 'cyan-dark': '#0891b2',
+              purple: '#a855f7', 'purple-light': '#c084fc', 'purple-dark': '#9333ea',
+              emerald: '#10b981'
+            }
+          },
+          boxShadow: {
+            neural: '0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(168, 85, 247, 0.2)'
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'Segoe UI', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body class="antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-950">
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 neural-bg opacity-80"></div>
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+    <div class="relative max-w-6xl mx-auto px-6 pt-10 pb-16">
+      <nav class="flex items-center justify-between mb-8 glass rounded-2xl px-4 py-3">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl bg-white/70 dark:bg-gray-900/70 backdrop-blur-md flex items-center justify-center shadow-lg glow-effect">
+            <span class="text-lg font-semibold gradient-text">ACPS</span>
+          </div>
+          <div>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Adaptive Causal Prompting</p>
+            <p class="text-xs text-gray-500">Sketch-of-Thought | Front-door Adjustment</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <a class="px-3 py-2 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-md hover:shadow-neural transition" href="https://github.com/Aisuko/acps#readme" target="_blank" rel="noreferrer">Docs</a>
+          <a class="px-3 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-500 transition btn-pulse" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">Paper</a>
+        </div>
+      </nav>
+
+      <header class="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 shadow-xl">
+        <div class="space-y-6">
+          <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70 border border-white/60 text-sm">EACL 2026 Findings · Published 04 Jan 2026</p>
+          <h1 class="text-4xl lg:text-5xl font-bold leading-tight gradient-text">Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought</h1>
+          <p class="text-lg text-gray-700 dark:text-gray-200">ACPS is an adaptive causal prompting framework that selects between standard and conditional front-door adjustment and pairs it with concise Sketch-of-Thought mediators for robust, cost-efficient reasoning.</p>
+          <div class="flex flex-wrap gap-3">
+            <a class="px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-500 transition shadow-lg" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">Read the paper</a>
+            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">GitHub repo</a>
+            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="#video">Demo video (soon)</a>
+          </div>
+          <div class="flex flex-wrap gap-2 text-sm text-gray-700 dark:text-gray-200">
+            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Keywords: LLMs</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Prompting</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Causality</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Sketch-of-Thought</span>
+          </div>
+          <div class="text-sm text-gray-700 dark:text-gray-300">
+            <p><strong>Authors:</strong> Bowen Li, Ziqi Xu, Jing Ren, Renqiang Luo, Xikun Zhang, Xiuzhen Zhang, Yongli Ren, Feng Xia</p>
+            <p><strong>TL;DR:</strong> Adaptive causal routing + Sketch-of-Thought mediators deliver robust reasoning with fewer tokens.</p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-3xl blur-2xl opacity-50" style="background: var(--neural-gradient);"></div>
+          <div class="relative bg-white/80 dark:bg-gray-900/80 rounded-3xl shadow-2xl p-6 border border-white/60 dark:border-gray-800 card-hover">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="h-12 w-12 rounded-2xl neural-bg shadow-lg"></div>
+              <div>
+                <p class="text-xs text-gray-500">Causal Graph</p>
+                <p class="font-semibold">Front-door & Conditional Front-door</p>
+              </div>
+            </div>
+            <img src="../img/causality_digram.png" alt="Causality diagram" class="rounded-2xl border border-gray-100 dark:border-gray-800 w-full" />
+            <div class="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <p>ACPS infers causal effects per instance and routes to the right intervention.</p>
+              <p>Sketch-of-Thought serves as a compact mediator to reduce token cost without losing reasoning diversity.</p>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 pb-20 space-y-16">
+    <section id="video" class="grid lg:grid-cols-5 gap-8 items-center">
+      <div class="lg:col-span-3 glass-strong rounded-3xl p-6 shadow-xl">
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-sm uppercase tracking-wide text-primary-700 dark:text-primary-200">Demo Video</p>
+          <span class="text-xs text-gray-500">Placeholder — replace src with final recording</span>
+        </div>
+        <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shimmer">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID" title="ACPS Demo" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="lg:col-span-2 space-y-4">
+        <div class="glass rounded-2xl p-4 shadow-lg">
+          <h3 class="text-xl font-semibold">Why ACPS</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300">Adaptive causal routing + Sketch-of-Thought keeps reasoning faithful while trimming token usage.</p>
+        </div>
+        <div class="glass rounded-2xl p-4 shadow-lg">
+          <h3 class="text-xl font-semibold">Paper at a glance</h3>
+          <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+            <li>Venue: EACL 2026 Findings</li>
+            <li>Published: 04 Jan 2026</li>
+            <li>License: CC BY 4.0 for the paper, MIT for code</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach" class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl neural-bg shadow-lg"></div>
+        <div>
+          <p class="text-sm text-primary-700 dark:text-primary-200">Method</p>
+          <h2 class="text-3xl font-bold">Adaptive Causal Prompting + Sketch-of-Thought</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-5 card-hover h-full">
+          <h3 class="font-semibold text-lg">Instance-level routing</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300">Select between standard and conditional front-door adjustments based on query context to preserve causal faithfulness.</p>
+        </div>
+        <div class="glass rounded-2xl p-5 card-hover h-full">
+          <h3 class="font-semibold text-lg">Sketch-of-Thought mediators</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300">Diverse sampling + clustering yields concise mediators that maintain reasoning coverage while reducing tokens.</p>
+        </div>
+        <div class="glass rounded-2xl p-5 card-hover h-full">
+          <h3 class="font-semibold text-lg">Efficiency + robustness</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300">Across GSM8K, HotpotQA, FEVER, Math, StrategyQA, MusiQue, and CommonsenseQA, ACPS improves accuracy and lowers inference cost.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline" class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">🗓️</div>
+        <div>
+          <p class="text-sm text-primary-700 dark:text-primary-200">Project Timeline</p>
+          <h2 class="text-3xl font-bold">Milestones</h2>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
+          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">2026</div>
+          <div>
+            <p class="font-semibold">04 Jan 2026 · Paper published</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Camera-ready aligned with released notebooks and datasets.</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
+          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">2026</div>
+          <div>
+            <p class="font-semibold">EACL 2026 Findings</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Conference presentation; discussions with area chairs and reviewers incorporated.</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
+          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">Next</div>
+          <div>
+            <p class="font-semibold">Demo video & live notebook refresh</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Replace the placeholder iframe above with the recorded walkthrough.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiments" class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-accent-cyan text-white flex items-center justify-center shadow-lg">🧪</div>
+        <div>
+          <p class="text-sm text-primary-700 dark:text-primary-200">Experiments</p>
+          <h2 class="text-3xl font-bold">Benchmarks & Notebooks</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-5 card-hover h-full">
+          <h3 class="font-semibold text-lg">Core ACPS</h3>
+          <ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+            <li>CommonsenseQA — <code>acps/acps-on-commonsenseqa.ipynb</code></li>
+            <li>FEVER — <code>acps/acps-on-fever.ipynb</code></li>
+            <li>HotpotQA — <code>acps/acps-on-hotpotqa.ipynb</code></li>
+            <li>GSM8K — <code>acps/acps-on-gsm8k.ipynb</code></li>
+            <li>Math — <code>acps/acps-on-math.ipynb</code></li>
+            <li>StrategyQA — <code>acps/acps-on-strategyqa.ipynb</code></li>
+            <li>MusiQue — <code>acps/acps-on-musique.ipynb</code></li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-5 card-hover h-full">
+          <h3 class="font-semibold text-lg">Datasets & Studies</h3>
+          <ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+            <li>SoT builders — <code>sots_datasets/*.ipynb</code></li>
+            <li>Efficiency comparison — <code>efficiency_comparison/</code></li>
+            <li>Robustness (shuffled/injected) — <code>robustness_study/</code></li>
+            <li>Helpers (encoders, prompts, metrics) — <code>helpers/</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="usage" class="grid md:grid-cols-2 gap-6">
+      <div class="glass rounded-2xl p-6 card-hover">
+        <h3 class="text-2xl font-bold mb-3">Quickstart (notebooks)</h3>
+        <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          <li>Open a Kaggle notebook (Python 3.11.13, GPU recommended).</li>
+          <li>Install dependencies: <code>pip install -r requirements.txt</code> (the list is heavy; trim if you only need selected notebooks).</li>
+          <li>Run <code>acps.ipynb</code> for the full pipeline, or the task-specific notebook under <code>acps/</code>.</li>
+          <li>Use <code>sots_datasets/</code> notebooks to regenerate Sketch-of-Thought mediators.</li>
+        </ol>
+      </div>
+      <div class="glass rounded-2xl p-6 card-hover space-y-3">
+        <h3 class="text-2xl font-bold">Resources</h3>
+        <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+          <p><strong>Paper:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">OpenReview</a></p>
+          <p><strong>Citation:</strong> see <code>CITATION.cff</code></p>
+          <p><strong>License:</strong> MIT (code), CC BY 4.0 (paper)</p>
+          <p><strong>Contact:</strong> Open an issue on GitHub for questions or reproduction notes.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
