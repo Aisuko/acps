@@ -1,7 +1,7 @@
 <h1 align="center"><b>Adaptive Causal Prompting with Sketch-of-Thought (ACPS)</b></h1>
 
 <p align="center">
-  <img src="img/causality_digram.png" alt="Causality diagram" style="max-width: 100%; height: auto;">
+  <img src="docs/img/causality_digram.png" alt="Causality diagram" style="max-width: 100%; height: auto;">
 </p>
 
 ---
