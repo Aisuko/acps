@@ -38,12 +38,11 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-glow: glow 2s ease-in-out infinite alternate;
 
-  --font-base: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-base: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 @keyframes gradient {
-  0%,
-  100% {
+  0%, 100% {
     background-size: 200% 200%;
     background-position: left center;
   }
@@ -54,12 +53,11 @@
 }
 
 @keyframes float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-20px) rotate(5deg);
+    transform: translateY(-20px) rotate(2deg);
   }
 }
 
@@ -78,8 +76,7 @@
 }
 
 @keyframes neural-pulse {
-  0%,
-  100% { opacity: 0.3; }
+  0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }
 
@@ -87,6 +84,13 @@
   0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
   70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
   100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 
 html {
@@ -211,16 +215,24 @@ body {
 .neural-line { animation: neural-pulse 2s ease-in-out infinite; }
 
 .card-hover {
-  transition: all 0.3s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(0);
 }
 
 .card-hover:hover {
   box-shadow: var(--shadow-neural);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .btn-pulse { animation: button-pulse 2s infinite; }
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
 
 :focus-visible {
   outline: none;

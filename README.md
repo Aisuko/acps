@@ -15,17 +15,9 @@
 ## TL;DR
 ACPS adaptively routes between standard and conditional front-door adjustments and uses concise Sketch-of-Thought mediators to deliver robust, token-efficient reasoning across diverse tasks.
 
-## Abstract
-Despite notable advancements in prompting methods for Large Language Models (LLMs), such as Chain-of-Thought (CoT), existing strategies still suffer from excessive token usage and limited generalisability across diverse reasoning tasks. To address these limitations, we propose an Adaptive Causal Prompting with Sketch-of-Thought (ACPS) framework, which leverages structural causal models to infer the causal effect of a query on its answer and adaptively select an appropriate intervention (i.e., standard front-door and conditional front-door adjustments). This design enables generalisable causal reasoning across heterogeneous tasks without task-specific retraining. By replacing verbose CoT with concise Sketch-of-Thought, ACPS enables efficient reasoning that significantly reduces token usage and inference cost. Extensive experiments on multiple reasoning benchmarks and LLMs demonstrate that ACPS consistently outperforms existing prompting baselines in terms of accuracy, robustness, and computational efficiency.
-
-## Paper Timeline
-- 2026-01-04 — Camera-ready paper released (OpenReview submission 892) with aligned notebooks and assets.
-- 2026 — Accepted to EACL 2026 Findings; presented to Conference Area Chairs, Reviewers, Publication Chairs, and Authors track.
-- Next — Demo video and refreshed project page published (see `docs/` for GitHub Pages site).
-
-## Project Page
-- GitHub Pages uses the static site in `docs/` (Tailwind-based theme from the prior project). Configure GitHub Pages to serve from the `docs/` folder.
-- Demo video embedded in `docs/index.html`: https://youtu.be/eH8ZuQz4rbI.
+## Diasing Lens Video
+- Placeholder: Embed the Diasing Lens video here once the recording is ready (e.g., replace `VIDEO_ID` in the block below).
+- Example placeholder (replace `VIDEO_ID`): `https://youtu.be/VIDEO_ID`
 
 ## Repository Map
 - `acps/` — Task-specific ACPS notebooks (CommonsenseQA, FEVER, HotpotQA, GSM8K, Math, StrategyQA, MusiQue).
@@ -47,33 +39,6 @@ Despite notable advancements in prompting methods for Large Language Models (LLM
   4. Use `sots_datasets/` notebooks to regenerate Sketch-of-Thought mediators; use `robustness_study/` and `efficiency_comparison/` for robustness and efficiency analyses.
 - Outputs are notebook-driven; no standalone Python package is provided yet.
 
-## Figures (quick view)
-<p align="center">
-  <img src="img/avg_steps_causality.png" alt="Average reasoning steps under causal routing" width="45%" />
-  <img src="img/avg_tokens_causality.png" alt="Average tokens vs causal routing" width="45%" />
-</p>
-<p align="center">
-  <img src="img/avg_steps_cot_vs_sot.png" alt="Reasoning steps: Chain-of-Thought vs Sketch-of-Thought" width="45%" />
-  <img src="img/avg_tokens_cot_vs_sot.png" alt="Tokens: Chain-of-Thought vs Sketch-of-Thought" width="45%" />
-</p>
-<p align="center">
-  <img src="img/cot_vs_sot.png" alt="CoT vs SoT performance comparison" width="45%" />
-  <img src="img/tokens_vs_accuracy_hotpotqa.png" alt="Tokens vs accuracy on HotpotQA" width="45%" />
-</p>
-<p align="center">
-  <img src="img/tokens_vs_accuracy_strategyqa.png" alt="Tokens vs accuracy on StrategyQA" width="45%" />
-  <img src="img/causality_digram.png" alt="ACPS causal diagram" width="45%" />
-</p>
-
-Captions (left → right, top → bottom):
-- Average reasoning steps under causal routing; average tokens under causal routing.
-- Reasoning steps and tokens comparing Chain-of-Thought vs Sketch-of-Thought.
-- Aggregate CoT vs SoT performance; tokens vs accuracy on HotpotQA.
-- Tokens vs accuracy on StrategyQA; ACPS causal diagram.
-
-## Revision Note (meta-review response)
-ACPS extends causal prompting by supporting both context-free and context-dependent reasoning through adaptive selection between standard and conditional front-door adjustment. Lightweight per-instance routing combines with Sketch-of-Thought mediators (diverse sampling + clustering) to preserve reasoning diversity while reducing tokens. The revision clarifies efficiency accounting and the interaction between routing, mediator construction, and causal estimation.
-
 ## Citation
 Use `CITATION.cff` or the BibTeX below.
 
@@ -90,6 +55,3 @@ Use `CITATION.cff` or the BibTeX below.
 
 ## License
 MIT License for code; paper content under CC BY 4.0.
-
-## Contact
-Please open a GitHub issue for questions, reproduction notes, or collaboration inquiries.

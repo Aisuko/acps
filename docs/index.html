@@ -4,9 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ACPS | Adaptive Causal Prompting with Sketch-of-Thought</title>
+  <meta name="description" content="Debiasing LLMs with Adaptive Causal Prompting and Sketch-of-Thought - EACL 2026 Findings" />
+  <meta name="keywords" content="ACPS, Causal Prompting, Sketch-of-Thought, LLM, Debiasing, EACL 2026" />
+  <meta property="og:title" content="ACPS | Adaptive Causal Prompting with Sketch-of-Thought" />
+  <meta property="og:description" content="Debiasing LLMs with adaptive causal routing and Sketch-of-Thought mediators for robust, efficient reasoning." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3ctext y='.9em' font-size='90'%3e🧠%3c/text%3e%3c/svg%3e" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'media',
       theme: {
         extend: {
           colors: {
@@ -16,16 +23,18 @@
               800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
             },
             accent: {
-              cyan: '#06b6d4', 'cyan-light': '#22d3ee', 'cyan-dark': '#0891b2',
-              purple: '#a855f7', 'purple-light': '#c084fc', 'purple-dark': '#9333ea',
-              emerald: '#10b981'
+              cyan: '#06b6d4', purple: '#a855f7', emerald: '#10b981'
             }
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'Segoe UI', 'sans-serif']
           },
           boxShadow: {
             neural: '0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(168, 85, 247, 0.2)'
           },
-          fontFamily: {
-            display: ['Space Grotesk', 'Segoe UI', 'sans-serif']
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'gradient': 'gradient 8s ease infinite',
           }
         }
       }
@@ -33,307 +42,435 @@
   </script>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
-<body class="antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-950">
-  <div class="relative overflow-hidden">
-    <div class="absolute inset-0 neural-bg opacity-80"></div>
-    <div class="absolute inset-0 grid-pattern opacity-40"></div>
-    <div class="relative max-w-6xl mx-auto px-6 pt-10 pb-16">
-      <nav class="flex items-center justify-between mb-8 glass rounded-2xl px-4 py-3">
-        <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-xl bg-white/70 dark:bg-gray-900/70 backdrop-blur-md flex items-center justify-center shadow-lg glow-effect">
-            <span class="text-lg font-semibold gradient-text">ACPS</span>
+<body class="antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-950 min-h-screen transition-colors duration-300">
+  <div class="relative overflow-hidden min-h-screen">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-500/5 to-purple-500/10 dark:from-gray-950 dark:via-blue-950/20 dark:to-purple-500/5"></div>
+      <div class="absolute inset-0 grid-pattern opacity-30"></div>
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float" style="animation-delay: -2s;"></div>
+      <div class="absolute top-1/2 right-1/3 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl animate-float" style="animation-delay: -4s;"></div>
+    </div>
+    
+    <header class="fixed top-0 w-full z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="glass-strong rounded-2xl border border-gray-200/60 dark:border-gray-700/50 shadow-lg px-6 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl neural-bg shadow-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">AC</span>
+            </div>
+            <div class="hidden sm:block">
+              <p class="text-sm font-semibold gradient-text">Adaptive Causal Prompting</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">with Sketch-of-Thought</p>
+            </div>
           </div>
-          <div>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Adaptive Causal Prompting</p>
-            <p class="text-xs text-gray-500">Sketch-of-Thought | Front-door Adjustment</p>
+          <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" href="#approach">Approach</a>
+            <a class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" href="#experiments">Experiments</a>
+            <a class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" href="#applications">Use Cases</a>
+            <a class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" href="#video">Video</a>
+          </nav>
+          <div class="flex items-center gap-3 text-sm">
+            <a class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">📄 Paper</a>
+            <a class="px-4 py-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 transition-all duration-300 shadow-lg hover:shadow-primary-500/50 font-medium" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">⭐ GitHub</a>
           </div>
         </div>
-        <div class="flex items-center gap-3 text-sm">
-          <a class="px-3 py-2 rounded-lg bg-white/70 dark:bg-gray-900/70 backdrop-blur-md hover:shadow-neural transition" href="https://github.com/Aisuko/acps#readme" target="_blank" rel="noreferrer">Docs</a>
-          <a class="px-3 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-500 transition btn-pulse" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">Paper</a>
-        </div>
-      </nav>
+      </div>
+    </header>
 
-      <header class="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 shadow-xl">
-        <div class="space-y-6">
-          <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70 border border-white/60 text-sm">EACL 2026 Findings · Submission 892 · Published 04 Jan 2026</p>
-          <h1 class="text-4xl lg:text-5xl font-bold leading-tight gradient-text">Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought</h1>
-          <p class="text-lg text-gray-700 dark:text-gray-200">ACPS adaptively routes between standard and conditional front-door adjustments and uses concise Sketch-of-Thought mediators to deliver robust, token-efficient reasoning across diverse tasks.</p>
+    <main class="relative pt-32 pb-12">
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-blue-200 dark:border-blue-800 shadow-sm">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-primary-700 dark:text-primary-300 font-semibold text-sm">EACL 2026 Findings</span>
+            <span class="text-gray-500 dark:text-gray-400 text-sm">·</span>
+            <span class="text-gray-600 dark:text-gray-400 text-sm">Published 04 Jan 2026</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+            <span class="gradient-text">Debiasing LLMs</span>
+            <br />
+            <span class="text-gray-900 dark:text-white">with Adaptive Causal</span>
+            <br />
+            <span class="text-gray-900 dark:text-white">Prompting & SoT</span>
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-xl leading-relaxed">
+            ACPS routes each query to standard or conditional front-door adjustment and uses <span class="font-semibold text-primary-600 dark:text-primary-400">Sketch-of-Thought mediators</span> to cut token costs while keeping causal faithfulness and robustness across reasoning tasks.
+          </p>
           <div class="flex flex-wrap gap-3">
-            <a class="px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-500 transition shadow-lg" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">Read the paper</a>
-            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">GitHub repo</a>
-            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="#video">Debiasing Lens</a>
+            <a class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 transition-all duration-300 shadow-lg hover:shadow-primary-500/50 font-medium" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+              Read the Paper
+            </a>
+            <a class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              View Code
+            </a>
+            <a class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium" href="#video">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Watch Demo
+            </a>
           </div>
-          <div class="flex flex-wrap gap-2 text-sm text-gray-700 dark:text-gray-200">
-            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Keywords: LLMs</span>
-            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Prompting</span>
-            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Causality</span>
-            <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Sketch-of-Thought</span>
-          </div>
-          <div class="text-sm text-gray-700 dark:text-gray-300">
-            <p><strong>Authors:</strong> <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=D3-py-8AAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Bowen Li</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=znODztEAAAAJ&hl=en&authuser=1&oi=ao" target="_blank" rel="noreferrer">Ziqi Xu</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&authuser=1&user=fUjL_jYAAAAJ" target="_blank" rel="noreferrer">Jing Ren</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&user=yx6HsssAAAAJ" target="_blank" rel="noreferrer">Renqiang Luo</a>, Xikun Zhang, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=kuyecEEAAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Xiuzhen Zhang</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=ZZl7bW8AAAAJ&hl=en" target="_blank" rel="noreferrer">Yongli Ren</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&authuser=1&user=HDFA2VYAAAAJ" target="_blank" rel="noreferrer">Feng Xia</a></p>
-            <p><strong>TL;DR:</strong> Adaptive causal routing + Sketch-of-Thought mediators deliver robust reasoning with fewer tokens.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4">
+            <div class="text-center">
+              <div class="text-3xl font-bold gradient-text">7</div>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Benchmarks</p>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold gradient-text">↓58%</div>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Token Reduction</p>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold gradient-text">2×</div>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Routing Methods</p>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold gradient-text">✓</div>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Robust</p>
+            </div>
           </div>
         </div>
         <div class="relative">
-          <div class="absolute -inset-4 rounded-3xl blur-2xl opacity-50" style="background: var(--neural-gradient);"></div>
-          <div class="relative bg-white/80 dark:bg-gray-900/80 rounded-3xl shadow-2xl p-6 border border-white/60 dark:border-gray-800 card-hover">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-12 w-12 rounded-2xl neural-bg shadow-lg"></div>
+          <div class="absolute -inset-4 rounded-3xl blur-3xl opacity-40 neural-bg"></div>
+          <div class="relative glass-strong rounded-3xl shadow-2xl border border-gray-200/60 dark:border-gray-700/50 p-6 lg:p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="h-14 w-14 rounded-2xl neural-bg shadow-lg flex items-center justify-center">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
               <div>
-                <p class="text-xs text-gray-500">Causal Graph</p>
-                <p class="font-semibold">Front-door & Conditional Front-door</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">ACPS Causal Graph</p>
+                <p class="font-bold text-lg text-gray-900 dark:text-white">Front-door & Conditional Front-door</p>
               </div>
             </div>
-            <img src="../img/causality_digram.png" alt="Causality diagram" class="rounded-2xl border border-gray-100 dark:border-gray-800 w-full" />
-            <div class="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-              <p>ACPS infers causal effects per instance and routes to the right intervention.</p>
-              <p>Sketch-of-Thought serves as a compact mediator to reduce token cost without losing reasoning diversity.</p>
-            </div>
+            <img src="../img/causality_digram.png" alt="ACPS causal diagram showing front-door and conditional front-door adjustment" class="rounded-2xl border border-gray-100 dark:border-gray-800 w-full shadow-sm" />
+            <p class="mt-6 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              Instance-level causal routing plus Sketch-of-Thought mediators delivers robust, efficient reasoning across heterogeneous tasks.
+            </p>
           </div>
         </div>
-      </header>
-    </div>
+      </section>
+    </main>
   </div>
 
-  <main class="max-w-6xl mx-auto px-6 pb-20 space-y-16">
-    <section id="video" class="grid lg:grid-cols-5 gap-8 items-center">
-      <div class="lg:col-span-3 glass-strong rounded-3xl p-6 shadow-xl">
-        <div class="flex items-center justify-between mb-3">
-          <p class="text-sm uppercase tracking-wide text-primary-700 dark:text-primary-200">Debiasing Lens</p>
-          <span class="text-xs text-gray-500"></span>
+  <section id="approach" class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gray-50/50 to-transparent dark:via-gray-900/50"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-200 dark:border-primary-800 mb-4">
+          <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+          <span class="text-sm font-medium text-primary-700 dark:text-primary-300">Methodology</span>
         </div>
-        <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shimmer">
-          <iframe
-            class="w-full h-full"
-            src="https://www.youtube.com/embed/eH8ZuQz4rbI?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
-            title="ACPS Demo"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+          <span class="gradient-text">Adaptive Causal Prompting</span>
+          <span class="text-gray-900 dark:text-white"> + Sketch-of-Thought</span>
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          A novel framework combining instance-level causal routing with efficient reasoning mediators
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass rounded-2xl p-8 card-hover border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-6 shadow-lg shadow-primary-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Instance-level Routing</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Automatically choose standard or conditional front-door adjustment based on query context to preserve causal faithfulness.</p>
+        </div>
+        <div class="glass rounded-2xl p-8 card-hover border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-cyan to-cyan-600 flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Sketch-of-Thought Mediators</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Diverse sampling and clustering produce compact mediators that trim token usage without losing reasoning coverage.</p>
+        </div>
+        <div class="glass rounded-2xl p-8 card-hover border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-purple to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-purple-500/30">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">Efficiency & Robustness</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Tested on GSM8K, HotpotQA, FEVER, Math, StrategyQA, MusiQue, CommonsenseQA; includes injected/shuffled stress tests.</p>
         </div>
       </div>
-      <div class="lg:col-span-2 space-y-4">
-        <div class="glass rounded-2xl p-4 shadow-lg">
-          <h3 class="text-xl font-semibold">Why ACPS</h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300">Adaptive causal routing + Sketch-of-Thought keeps reasoning faithful while trimming token usage.</p>
+    </div>
+  </section>
+
+  <section id="experiments" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-gray-900 dark:to-gray-800/50 relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="flex flex-col md:flex-row md:items-center gap-4 mb-12">
+        <div class="h-14 w-14 rounded-2xl neural-bg shadow-lg flex items-center justify-center">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
         </div>
-        <div class="glass rounded-2xl p-4 shadow-lg">
-          <h3 class="text-xl font-semibold">Paper at a glance</h3>
-          <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
-            <li>Venue: EACL 2026 Findings</li>
-            <li>Published: 04 Jan 2026</li>
-            <li>License: CC BY 4.0 for the paper, MIT for code</li>
+        <div>
+          <p class="text-primary-600 dark:text-primary-400 text-sm uppercase tracking-wide font-semibold">Experiments</p>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Benchmarks & Notebooks</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glass-strong rounded-2xl p-8 card-hover border border-gray-200/60 dark:border-gray-700/50 h-full">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Core ACPS Experiments</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-primary-500"></span>
+              <span>CommonsenseQA — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-commonsenseqa.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-cyan"></span>
+              <span>FEVER — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-fever.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-purple"></span>
+              <span>HotpotQA — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-hotpotqa.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-emerald"></span>
+              <span>GSM8K — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-gsm8k.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+              <span>Math — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-math.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+              <span>StrategyQA — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-strategyqa.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+              <span>MusiQue — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">acps-on-musique.ipynb</code></span>
+            </li>
+          </ul>
+        </div>
+        <div class="glass-strong rounded-2xl p-8 card-hover border border-gray-200/60 dark:border-gray-700/50 h-full">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-cyan to-cyan-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Datasets & Studies</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-primary-500"></span>
+              <span>SoT builders — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">sots_datasets/*.ipynb</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-cyan"></span>
+              <span>Efficiency comparison — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">efficiency_comparison/</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-purple"></span>
+              <span>Robustness (shuffled/injected) — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">robustness_study/</code></span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+              <span class="w-2 h-2 rounded-full bg-accent-emerald"></span>
+              <span>Helpers (encoders, prompts) — <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">helpers/</code></span>
+            </li>
+          </ul>
+          <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <a href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-medium hover:underline">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              Browse all notebooks on GitHub →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="applications" class="py-20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+          <span class="text-gray-900 dark:text-white">Where </span>
+          <span class="gradient-text">ACPS Helps</span>
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">Robust, token-efficient reasoning across heterogeneous tasks</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="glass rounded-2xl p-6 card-hover text-center border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-500/30">
+            <span class="text-3xl">🧮</span>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Math & GSM8K</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Stable reasoning with fewer tokens for complex mathematical problems.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 card-hover text-center border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-cyan to-cyan-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/30">
+            <span class="text-3xl">📚</span>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Multi-hop QA</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">HotpotQA, StrategyQA, MusiQue with adaptive causal routing.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 card-hover text-center border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-purple to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/30">
+            <span class="text-3xl">🧾</span>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Fact Verification</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">FEVER robustness under injected/shuffled contexts.</p>
+        </div>
+        <div class="glass rounded-2xl p-6 card-hover text-center border border-gray-200/50 dark:border-gray-700/50">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-emerald to-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/30">
+            <span class="text-3xl">🧠</span>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Commonsense</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">CommonsenseQA causal mediation with Sketch-of-Thought.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-gray-900 dark:to-gray-800/50 relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative grid lg:grid-cols-5 gap-10 items-center">
+      <div class="lg:col-span-3 glass-strong rounded-3xl p-6 lg:p-8 shadow-xl border border-gray-200/60 dark:border-gray-700/50">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl neural-bg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <p class="text-sm uppercase tracking-wide font-semibold text-primary-600 dark:text-primary-400">Demo Video</p>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">Replace VIDEO_ID with your recording</span>
+        </div>
+        <div class="aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shimmer">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID" title="ACPS Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="lg:col-span-2 space-y-6">
+        <div class="glass-strong rounded-2xl p-6 shadow-lg border border-gray-200/60 dark:border-gray-700/50">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Why ACPS?</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Adaptive causal routing plus Sketch-of-Thought mediators keeps reasoning faithful while reducing token usage significantly.</p>
+        </div>
+        <div class="glass-strong rounded-2xl p-6 shadow-lg border border-gray-200/60 dark:border-gray-700/50">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-cyan to-cyan-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Paper at a Glance</h3>
+          </div>
+          <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary-500"></span>
+              <span><strong>Venue:</strong> EACL 2026 Findings</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan"></span>
+              <span><strong>Published:</strong> 04 Jan 2026</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-purple"></span>
+              <span><strong>License:</strong> MIT (code), CC BY 4.0 (paper)</span>
+            </li>
           </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="paper" class="grid md:grid-cols-2 gap-6">
-      <div class="glass rounded-2xl p-6 card-hover space-y-4">
-        <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">ID</div>
-          <div>
-            <p class="text-sm text-primary-700 dark:text-primary-200">Paper metadata</p>
-            <h2 class="text-2xl font-bold">Submission 892 · OpenReview</h2>
+  <!-- CTA Section -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-cyan to-accent-purple"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+        Ready to Reproduce ACPS?
+      </h2>
+      <p class="text-lg text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+        Open the notebooks, regenerate Sketch-of-Thought mediators, and run the causal routing pipeline on your own benchmarks.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white text-primary-700 font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300" href="https://github.com/Aisuko/acps#readme" target="_blank" rel="noreferrer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+          Open README
+        </a>
+        <a class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border-2 border-white/70 text-white font-semibold hover:bg-white/10 transition-all duration-300" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          View Notebooks
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 dark:bg-black text-white py-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-950/20 via-purple-500/5 to-cyan-500/5"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div class="md:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="h-12 w-12 rounded-xl neural-bg shadow-lg flex items-center justify-center">
+              <span class="text-white font-bold">AC</span>
+            </div>
+            <div>
+              <span class="text-xl font-bold gradient-text">ACPS</span>
+              <p class="text-sm text-gray-400">Adaptive Causal Prompting</p>
+            </div>
+          </div>
+          <p class="text-gray-400 leading-relaxed max-w-md">
+            Debiasing LLMs with adaptive causal routing and Sketch-of-Thought mediators for robust, efficient reasoning across diverse benchmarks.
+          </p>
+          <div class="flex gap-3 pt-2">
+            <a href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer" class="w-10 h-10 rounded-lg bg-gray-800 hover:bg-primary-600 flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/30">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer" class="w-10 h-10 rounded-lg bg-gray-800 hover:bg-primary-600 flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/30">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </a>
           </div>
         </div>
-        <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-2">
-          <li><strong>Title:</strong> Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought</li>
-          <li><strong>Authors:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=D3-py-8AAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Bowen Li</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=znODztEAAAAJ&hl=en&authuser=1&oi=ao" target="_blank" rel="noreferrer">Ziqi Xu</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&authuser=1&user=fUjL_jYAAAAJ" target="_blank" rel="noreferrer">Jing Ren</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&user=yx6HsssAAAAJ" target="_blank" rel="noreferrer">Renqiang Luo</a>, Xikun Zhang, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=kuyecEEAAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Xiuzhen Zhang</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=ZZl7bW8AAAAJ&hl=en" target="_blank" rel="noreferrer">Yongli Ren</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&authuser=1&user=HDFA2VYAAAAJ" target="_blank" rel="noreferrer">Feng Xia</a></li>
-          <li><strong>Published:</strong> 04 Jan 2026 (last modified 04 Jan 2026)</li>
-          <li><strong>Venue:</strong> EACL 2026 Findings</li>
-          <li><strong>Keywords:</strong> Large Language Models, Reasoning, Prompting, Causality</li>
-          <li><strong>Licenses:</strong> MIT (code), CC BY 4.0 (paper)</li>
-          <li><strong>Link:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">OpenReview SdTSZ5GfV0</a></li>
-        </ul>
-      </div>
-      <div class="glass rounded-2xl p-6 card-hover space-y-3">
-        <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-xl bg-accent-cyan text-white flex items-center justify-center shadow-lg">Q&A</div>
-          <div>
-            <p class="text-sm text-primary-700 dark:text-primary-200">Meta-review response</p>
-            <h2 class="text-2xl font-bold">What changed in revision</h2>
-          </div>
-        </div>
-        <p class="text-sm text-gray-700 dark:text-gray-300">ACPS supports both context-free and context-dependent reasoning via adaptive routing between standard and conditional front-door adjustment. Lightweight per-instance routing is paired with Sketch-of-Thought mediators built from diverse sampling and clustering, preserving reasoning diversity while reducing token usage.</p>
-        <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
-          <li>Clarified efficiency accounting and causal estimation steps.</li>
-          <li>Explained how routing, mediator construction, and causal estimates interact.</li>
-          <li>Moderated novelty framing relative to prior causal prompting work.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="approach" class="space-y-6">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl neural-bg shadow-lg"></div>
         <div>
-          <p class="text-sm text-primary-700 dark:text-primary-200">Method</p>
-          <h2 class="text-3xl font-bold">Adaptive Causal Prompting + Sketch-of-Thought</h2>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-5 card-hover h-full">
-          <h3 class="font-semibold text-lg">Instance-level routing</h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300">Select between standard and conditional front-door adjustments based on query context to preserve causal faithfulness.</p>
-        </div>
-        <div class="glass rounded-2xl p-5 card-hover h-full">
-          <h3 class="font-semibold text-lg">Sketch-of-Thought mediators</h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300">Diverse sampling + clustering yields concise mediators that maintain reasoning coverage while reducing tokens.</p>
-        </div>
-        <div class="glass rounded-2xl p-5 card-hover h-full">
-          <h3 class="font-semibold text-lg">Efficiency + robustness</h3>
-          <p class="text-sm text-gray-700 dark:text-gray-300">Across GSM8K, HotpotQA, FEVER, Math, StrategyQA, MusiQue, and CommonsenseQA, ACPS improves accuracy and lowers inference cost.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="timeline" class="space-y-4">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">🗓️</div>
-        <div>
-          <p class="text-sm text-primary-700 dark:text-primary-200">Project Timeline</p>
-          <h2 class="text-3xl font-bold">Milestones</h2>
-        </div>
-      </div>
-      <div class="space-y-3">
-        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
-          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">2026</div>
-          <div>
-            <p class="font-semibold">04 Jan 2026 · Paper published</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Camera-ready aligned with released notebooks, datasets, and figures.</p>
-          </div>
-        </div>
-        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
-          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">2026</div>
-          <div>
-            <p class="font-semibold">EACL 2026 Findings</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Conference presentation; discussions with area chairs and reviewers incorporated.</p>
-          </div>
-        </div>
-        <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
-          <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">Next</div>
-          <div>
-            <p class="font-semibold">Demo video & live notebook refresh</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Replace the placeholder iframe above with the recorded walkthrough.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experiments" class="space-y-4">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-accent-cyan text-white flex items-center justify-center shadow-lg">🧪</div>
-        <div>
-          <p class="text-sm text-primary-700 dark:text-primary-200">Experiments</p>
-          <h2 class="text-3xl font-bold">Benchmarks & Notebooks</h2>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="glass rounded-2xl p-5 card-hover h-full">
-          <h3 class="font-semibold text-lg">Core ACPS</h3>
-          <ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-            <li>CommonsenseQA — <code>acps/acps-on-commonsenseqa.ipynb</code></li>
-            <li>FEVER — <code>acps/acps-on-fever.ipynb</code></li>
-            <li>HotpotQA — <code>acps/acps-on-hotpotqa.ipynb</code></li>
-            <li>GSM8K — <code>acps/acps-on-gsm8k.ipynb</code></li>
-            <li>Math — <code>acps/acps-on-math.ipynb</code></li>
-            <li>StrategyQA — <code>acps/acps-on-strategyqa.ipynb</code></li>
-            <li>MusiQue — <code>acps/acps-on-musique.ipynb</code></li>
+          <h4 class="font-bold mb-4 text-white">Resources</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              Paper (OpenReview)
+            </a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://github.com/Aisuko/acps#readme" target="_blank" rel="noreferrer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+              Documentation
+            </a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              GitHub Repository
+            </a></li>
           </ul>
         </div>
-        <div class="glass rounded-2xl p-5 card-hover h-full">
-          <h3 class="font-semibold text-lg">Datasets & Studies</h3>
-          <ul class="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-            <li>SoT builders — <code>sots_datasets/*.ipynb</code></li>
-            <li>Efficiency comparison — <code>efficiency_comparison/</code></li>
-            <li>Robustness (shuffled/injected) — <code>robustness_study/</code></li>
-            <li>Helpers (encoders, prompts, metrics) — <code>helpers/</code></li>
+        <div>
+          <h4 class="font-bold mb-4 text-white">Quick Links</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors" href="#approach">Approach</a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors" href="#experiments">Experiments</a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors" href="#applications">Use Cases</a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors" href="#video">Demo Video</a></li>
           </ul>
         </div>
       </div>
-    </section>
-
-    <section id="figures" class="space-y-6">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-accent-purple text-white flex items-center justify-center shadow-lg">📊</div>
-        <div>
-          <p class="text-sm text-primary-700 dark:text-primary-200">Visuals</p>
-          <h2 class="text-3xl font-bold">Results Gallery</h2>
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-500 text-sm">© 2026 ACPS. Built for robust, efficient reasoning.</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500">
+          <span class="flex items-center gap-2">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            EACL 2026 Findings
+          </span>
         </div>
       </div>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="glass rounded-2xl p-4 card-hover space-y-3">
-          <h3 class="font-semibold">Causal routing efficiency</h3>
-          <div class="space-y-3">
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_steps_causality.png" alt="Average reasoning steps under causal routing" class="w-full"></div>
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_tokens_causality.png" alt="Average tokens under causal routing" class="w-full"></div>
-          </div>
-        </div>
-        <div class="glass rounded-2xl p-4 card-hover space-y-3">
-          <h3 class="font-semibold">CoT vs SoT</h3>
-          <div class="space-y-3">
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_steps_cot_vs_sot.png" alt="Reasoning steps: Chain-of-Thought vs Sketch-of-Thought" class="w-full"></div>
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_tokens_cot_vs_sot.png" alt="Tokens: Chain-of-Thought vs Sketch-of-Thought" class="w-full"></div>
-          </div>
-        </div>
-        <div class="glass rounded-2xl p-4 card-hover space-y-3">
-          <h3 class="font-semibold">Accuracy vs cost</h3>
-          <div class="space-y-3">
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/tokens_vs_accuracy_hotpotqa.png" alt="Tokens vs accuracy on HotpotQA" class="w-full"></div>
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/tokens_vs_accuracy_strategyqa.png" alt="Tokens vs accuracy on StrategyQA" class="w-full"></div>
-          </div>
-        </div>
-        <div class="glass rounded-2xl p-4 card-hover space-y-3">
-          <h3 class="font-semibold">Causal framing</h3>
-          <div class="space-y-3">
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/cot_vs_sot.png" alt="Aggregate CoT vs SoT performance" class="w-full"></div>
-            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/causality_digram.png" alt="ACPS causal diagram" class="w-full"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="usage" class="grid md:grid-cols-2 gap-6">
-      <div class="glass rounded-2xl p-6 card-hover">
-        <h3 class="text-2xl font-bold mb-3">Quickstart (notebooks)</h3>
-        <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 dark:text-gray-300">
-          <li>Open a Kaggle notebook (Python 3.11.13, GPU recommended).</li>
-          <li>Install dependencies: <code>pip install -r requirements.txt</code> (the list is heavy; trim if you only need selected notebooks).</li>
-          <li>Run <code>acps.ipynb</code> for the full pipeline, or the task-specific notebook under <code>acps/</code>.</li>
-          <li>Use <code>sots_datasets/</code> notebooks to regenerate Sketch-of-Thought mediators.</li>
-        </ol>
-      </div>
-      <div class="glass rounded-2xl p-6 card-hover space-y-3">
-        <h3 class="text-2xl font-bold">Resources</h3>
-        <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-          <p><strong>Paper:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">OpenReview</a></p>
-          <p><strong>Citation:</strong> see <code>CITATION.cff</code></p>
-          <p><strong>License:</strong> MIT (code), CC BY 4.0 (paper)</p>
-          <p><strong>Contact:</strong> Open an issue on GitHub for questions or reproduction notes.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="citation" class="glass rounded-2xl p-6 card-hover space-y-3">
-      <div class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">Cite</div>
-        <div>
-          <p class="text-sm text-primary-700 dark:text-primary-200">Citation</p>
-          <h2 class="text-2xl font-bold">BibTeX</h2>
-        </div>
-      </div>
-      <pre class="bg-gray-900 text-gray-100 rounded-xl p-4 overflow-x-auto text-sm"><code>@inproceedings{li2026acps,
-  title     = {Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought},
-  author    = {Bowen Li and Ziqi Xu and Jing Ren and Renqiang Luo and Xikun Zhang and Xiuzhen Zhang and Yongli Ren and Feng Xia},
-  booktitle = {Findings of the Association for Computational Linguistics: EACL 2026},
-  year      = {2026},
-  month     = {January},
-  note      = {OpenReview id: SdTSZ5GfV0}
-}</code></pre>
-    </section>
-  </main>
+    </div>
+  </footer>
 </body>
 </html>
