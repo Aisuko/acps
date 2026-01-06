@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+/* Tailwind-inspired theme (ported from previous project) */
 :root {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
@@ -32,6 +33,10 @@
 
   --neural-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #a855f7 100%);
   --glow-color: rgba(59, 130, 246, 0.4);
+
+  --animate-gradient: gradient 8s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
 
   --font-base: 'Space Grotesk', 'Segoe UI', sans-serif;
 }
@@ -224,6 +229,10 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :focus-visible { box-shadow: 0 0 0 2px var(--color-primary-500), 0 0 0 4px #030712; }
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track { background-color: #111827; }
 }
 
 @media (max-width: 640px) { html { font-size: 14px; } }

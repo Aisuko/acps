@@ -56,13 +56,13 @@
 
       <header class="grid lg:grid-cols-2 gap-10 items-center glass-strong rounded-3xl p-8 shadow-xl">
         <div class="space-y-6">
-          <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70 border border-white/60 text-sm">EACL 2026 Findings · Published 04 Jan 2026</p>
+          <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70 border border-white/60 text-sm">EACL 2026 Findings · Submission 892 · Published 04 Jan 2026</p>
           <h1 class="text-4xl lg:text-5xl font-bold leading-tight gradient-text">Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought</h1>
-          <p class="text-lg text-gray-700 dark:text-gray-200">ACPS is an adaptive causal prompting framework that selects between standard and conditional front-door adjustment and pairs it with concise Sketch-of-Thought mediators for robust, cost-efficient reasoning.</p>
+          <p class="text-lg text-gray-700 dark:text-gray-200">ACPS adaptively routes between standard and conditional front-door adjustments and uses concise Sketch-of-Thought mediators to deliver robust, token-efficient reasoning across diverse tasks.</p>
           <div class="flex flex-wrap gap-3">
             <a class="px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-500 transition shadow-lg" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">Read the paper</a>
             <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="https://github.com/Aisuko/acps" target="_blank" rel="noreferrer">GitHub repo</a>
-            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="#video">Demo video (soon)</a>
+            <a class="px-4 py-2 rounded-lg border border-white/70 bg-white/70 dark:bg-gray-900/70 hover:shadow-neural transition" href="#video">Debiasing Lens</a>
           </div>
           <div class="flex flex-wrap gap-2 text-sm text-gray-700 dark:text-gray-200">
             <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Keywords: LLMs</span>
@@ -71,7 +71,7 @@
             <span class="px-3 py-1 rounded-full bg-white/70 dark:bg-gray-900/70">Sketch-of-Thought</span>
           </div>
           <div class="text-sm text-gray-700 dark:text-gray-300">
-            <p><strong>Authors:</strong> Bowen Li, Ziqi Xu, Jing Ren, Renqiang Luo, Xikun Zhang, Xiuzhen Zhang, Yongli Ren, Feng Xia</p>
+            <p><strong>Authors:</strong> <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=D3-py-8AAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Bowen Li</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=znODztEAAAAJ&hl=en&authuser=1&oi=ao" target="_blank" rel="noreferrer">Ziqi Xu</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&authuser=1&user=fUjL_jYAAAAJ" target="_blank" rel="noreferrer">Jing Ren</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&user=yx6HsssAAAAJ" target="_blank" rel="noreferrer">Renqiang Luo</a>, Xikun Zhang, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=kuyecEEAAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Xiuzhen Zhang</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?user=ZZl7bW8AAAAJ&hl=en" target="_blank" rel="noreferrer">Yongli Ren</a>, <a class="text-primary-700 hover:text-primary-500 dark:text-primary-200 dark:hover:text-primary-100 hover:underline" href="https://scholar.google.com/citations?hl=en&authuser=1&user=HDFA2VYAAAAJ" target="_blank" rel="noreferrer">Feng Xia</a></p>
             <p><strong>TL;DR:</strong> Adaptive causal routing + Sketch-of-Thought mediators deliver robust reasoning with fewer tokens.</p>
           </div>
         </div>
@@ -100,11 +100,18 @@
     <section id="video" class="grid lg:grid-cols-5 gap-8 items-center">
       <div class="lg:col-span-3 glass-strong rounded-3xl p-6 shadow-xl">
         <div class="flex items-center justify-between mb-3">
-          <p class="text-sm uppercase tracking-wide text-primary-700 dark:text-primary-200">Demo Video</p>
-          <span class="text-xs text-gray-500">Placeholder — replace src with final recording</span>
+          <p class="text-sm uppercase tracking-wide text-primary-700 dark:text-primary-200">Debiasing Lens</p>
+          <span class="text-xs text-gray-500"></span>
         </div>
         <div class="aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shimmer">
-          <iframe class="w-full h-full" src="https://www.youtube.com/embed/VIDEO_ID" title="ACPS Demo" frameborder="0" allowfullscreen></iframe>
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/eH8ZuQz4rbI?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+            title="ACPS Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
       <div class="lg:col-span-2 space-y-4">
@@ -120,6 +127,42 @@
             <li>License: CC BY 4.0 for the paper, MIT for code</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section id="paper" class="grid md:grid-cols-2 gap-6">
+      <div class="glass rounded-2xl p-6 card-hover space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">ID</div>
+          <div>
+            <p class="text-sm text-primary-700 dark:text-primary-200">Paper metadata</p>
+            <h2 class="text-2xl font-bold">Submission 892 · OpenReview</h2>
+          </div>
+        </div>
+        <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+          <li><strong>Title:</strong> Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought</li>
+          <li><strong>Authors:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=D3-py-8AAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Bowen Li</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=znODztEAAAAJ&hl=en&authuser=1&oi=ao" target="_blank" rel="noreferrer">Ziqi Xu</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&authuser=1&user=fUjL_jYAAAAJ" target="_blank" rel="noreferrer">Jing Ren</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&user=yx6HsssAAAAJ" target="_blank" rel="noreferrer">Renqiang Luo</a>, Xikun Zhang, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=kuyecEEAAAAJ&hl=en&authuser=1" target="_blank" rel="noreferrer">Xiuzhen Zhang</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?user=ZZl7bW8AAAAJ&hl=en" target="_blank" rel="noreferrer">Yongli Ren</a>, <a class="text-primary-600 hover:text-primary-500" href="https://scholar.google.com/citations?hl=en&authuser=1&user=HDFA2VYAAAAJ" target="_blank" rel="noreferrer">Feng Xia</a></li>
+          <li><strong>Published:</strong> 04 Jan 2026 (last modified 04 Jan 2026)</li>
+          <li><strong>Venue:</strong> EACL 2026 Findings</li>
+          <li><strong>Keywords:</strong> Large Language Models, Reasoning, Prompting, Causality</li>
+          <li><strong>Licenses:</strong> MIT (code), CC BY 4.0 (paper)</li>
+          <li><strong>Link:</strong> <a class="text-primary-600 hover:text-primary-500" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">OpenReview SdTSZ5GfV0</a></li>
+        </ul>
+      </div>
+      <div class="glass rounded-2xl p-6 card-hover space-y-3">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl bg-accent-cyan text-white flex items-center justify-center shadow-lg">Q&A</div>
+          <div>
+            <p class="text-sm text-primary-700 dark:text-primary-200">Meta-review response</p>
+            <h2 class="text-2xl font-bold">What changed in revision</h2>
+          </div>
+        </div>
+        <p class="text-sm text-gray-700 dark:text-gray-300">ACPS supports both context-free and context-dependent reasoning via adaptive routing between standard and conditional front-door adjustment. Lightweight per-instance routing is paired with Sketch-of-Thought mediators built from diverse sampling and clustering, preserving reasoning diversity while reducing token usage.</p>
+        <ul class="text-sm text-gray-700 dark:text-gray-300 list-disc list-inside space-y-1">
+          <li>Clarified efficiency accounting and causal estimation steps.</li>
+          <li>Explained how routing, mediator construction, and causal estimates interact.</li>
+          <li>Moderated novelty framing relative to prior causal prompting work.</li>
+        </ul>
       </div>
     </section>
 
@@ -160,7 +203,7 @@
           <div class="h-10 w-10 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center font-semibold">2026</div>
           <div>
             <p class="font-semibold">04 Jan 2026 · Paper published</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Camera-ready aligned with released notebooks and datasets.</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Camera-ready aligned with released notebooks, datasets, and figures.</p>
           </div>
         </div>
         <div class="glass rounded-2xl p-4 flex items-start gap-3 card-hover">
@@ -213,6 +256,46 @@
       </div>
     </section>
 
+    <section id="figures" class="space-y-6">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-accent-purple text-white flex items-center justify-center shadow-lg">📊</div>
+        <div>
+          <p class="text-sm text-primary-700 dark:text-primary-200">Visuals</p>
+          <h2 class="text-3xl font-bold">Results Gallery</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-4 card-hover space-y-3">
+          <h3 class="font-semibold">Causal routing efficiency</h3>
+          <div class="space-y-3">
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_steps_causality.png" alt="Average reasoning steps under causal routing" class="w-full"></div>
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_tokens_causality.png" alt="Average tokens under causal routing" class="w-full"></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 card-hover space-y-3">
+          <h3 class="font-semibold">CoT vs SoT</h3>
+          <div class="space-y-3">
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_steps_cot_vs_sot.png" alt="Reasoning steps: Chain-of-Thought vs Sketch-of-Thought" class="w-full"></div>
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/avg_tokens_cot_vs_sot.png" alt="Tokens: Chain-of-Thought vs Sketch-of-Thought" class="w-full"></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 card-hover space-y-3">
+          <h3 class="font-semibold">Accuracy vs cost</h3>
+          <div class="space-y-3">
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/tokens_vs_accuracy_hotpotqa.png" alt="Tokens vs accuracy on HotpotQA" class="w-full"></div>
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/tokens_vs_accuracy_strategyqa.png" alt="Tokens vs accuracy on StrategyQA" class="w-full"></div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 card-hover space-y-3">
+          <h3 class="font-semibold">Causal framing</h3>
+          <div class="space-y-3">
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/cot_vs_sot.png" alt="Aggregate CoT vs SoT performance" class="w-full"></div>
+            <div class="overflow-hidden rounded-xl border border-gray-100 dark:border-gray-800"><img src="../img/causality_digram.png" alt="ACPS causal diagram" class="w-full"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="usage" class="grid md:grid-cols-2 gap-6">
       <div class="glass rounded-2xl p-6 card-hover">
         <h3 class="text-2xl font-bold mb-3">Quickstart (notebooks)</h3>
@@ -232,6 +315,24 @@
           <p><strong>Contact:</strong> Open an issue on GitHub for questions or reproduction notes.</p>
         </div>
       </div>
+    </section>
+
+    <section id="citation" class="glass rounded-2xl p-6 card-hover space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shadow-lg">Cite</div>
+        <div>
+          <p class="text-sm text-primary-700 dark:text-primary-200">Citation</p>
+          <h2 class="text-2xl font-bold">BibTeX</h2>
+        </div>
+      </div>
+      <pre class="bg-gray-900 text-gray-100 rounded-xl p-4 overflow-x-auto text-sm"><code>@inproceedings{li2026acps,
+  title     = {Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought},
+  author    = {Bowen Li and Ziqi Xu and Jing Ren and Renqiang Luo and Xikun Zhang and Xiuzhen Zhang and Yongli Ren and Feng Xia},
+  booktitle = {Findings of the Association for Computational Linguistics: EACL 2026},
+  year      = {2026},
+  month     = {January},
+  note      = {OpenReview id: SdTSZ5GfV0}
+}</code></pre>
     </section>
   </main>
 </body>
