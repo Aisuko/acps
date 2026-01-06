@@ -15,9 +15,6 @@
 ## TL;DR
 ACPS adaptively routes between standard and conditional front-door adjustments and uses concise Sketch-of-Thought mediators to deliver robust, token-efficient reasoning across diverse tasks.
 
-## Diasing Lens Video
-- Placeholder: Embed the Diasing Lens video here once the recording is ready (e.g., replace `VIDEO_ID` in the block below).
-- Example placeholder (replace `VIDEO_ID`): `https://youtu.be/VIDEO_ID`
 
 ## Repository Map
 - `acps/` — Task-specific ACPS notebooks (CommonsenseQA, FEVER, HotpotQA, GSM8K, Math, StrategyQA, MusiQue).

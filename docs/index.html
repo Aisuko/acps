@@ -341,7 +341,7 @@
         <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">ACPS demo</span>
         </div>
         <div class="aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 shimmer">
-        <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/eH8ZuQz4rbI" title="ACPS Demo" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="acps-demo" class="w-full h-full" src="https://www.youtube-nocookie.com/embed/eH8ZuQz4rbI?enablejsapi=1" title="ACPS Demo" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
       <div class="lg:col-span-2 space-y-6">
@@ -472,5 +472,20 @@
       </div>
     </div>
   </footer>
+  <script src="https://www.youtube.com/iframe_api" async></script>
+  <script>
+    // Request 720p playback when available.
+    function onYouTubeIframeAPIReady() {
+      const el = document.getElementById('acps-demo');
+      if (!el || typeof YT === 'undefined') return;
+      new YT.Player('acps-demo', {
+        events: {
+          onReady: (event) => {
+            try { event.target.setPlaybackQuality('hd720'); } catch (_) {}
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
