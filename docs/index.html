@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4P7DT9R33"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q4P7DT9R33');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ACPS | Adaptive Causal Prompting with Sketch-of-Thought</title>
@@ -43,7 +52,7 @@
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body class="antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-950 min-h-screen transition-colors duration-300">
-  <div class="relative overflow-hidden min-h-screen">
+  <div class="relative overflow-hidden">
     <!-- Background Effects -->
     <div class="absolute inset-0 -z-10">
       <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-500/5 to-purple-500/10 dark:from-gray-950 dark:via-blue-950/20 dark:to-purple-500/5"></div>
@@ -113,6 +122,15 @@
             <a class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium" href="#video">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               Watch Demo
+            </a>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <span class="font-medium uppercase tracking-wide text-xs text-gray-500 dark:text-gray-500">Related papers</span>
+            <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium text-gray-700 dark:text-gray-300" href="https://aisuko.github.io/fair-tot/" target="_blank" rel="noreferrer">
+              FAIR-ToT
+            </a>
+            <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 dark:bg-gray-800/70 backdrop-blur-md border border-gray-200/60 dark:border-gray-700/50 hover:shadow-neural transition-all duration-300 font-medium text-gray-700 dark:text-gray-300" href="https://aisuko.github.io/ca2kg/" target="_blank" rel="noreferrer">
+              CA2KG
             </a>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4">
@@ -437,6 +455,14 @@
             <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://openreview.net/forum?id=SdTSZ5GfV0" target="_blank" rel="noreferrer">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
               Paper (OpenReview)
+            </a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://aisuko.github.io/fair-tot/" target="_blank" rel="noreferrer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              FAIR-ToT (Paper)
+            </a></li>
+            <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://aisuko.github.io/ca2kg/" target="_blank" rel="noreferrer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              CA2KG (Paper)
             </a></li>
             <li><a class="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2" href="https://github.com/Aisuko/acps#readme" target="_blank" rel="noreferrer">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
