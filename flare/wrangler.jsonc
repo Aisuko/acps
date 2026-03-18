@@ -4,25 +4,27 @@
   "main": ".svelte-kit/cloudflare/_worker.js",
   "assets": {
     "binding": "ASSETS",
-    "directory": ".svelte-kit/cloudflare"
+    "directory": ".svelte-kit/cloudflare",
   },
   "compatibility_date": "2026-03-18",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "env": {
     "production": {
       "vars": {
         "RATE_LIMIT_REQUESTS": "10",
-        "RATE_LIMIT_WINDOW_MS": "60000"
-      }
+        "RATE_LIMIT_WINDOW_MS": "60000",
+      },
+      "secrets": ["OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_BASE_URL"],
     },
     "staging": {
       "vars": {
         "RATE_LIMIT_REQUESTS": "50",
-        "RATE_LIMIT_WINDOW_MS": "60000"
-      }
-    }
-  }
+        "RATE_LIMIT_WINDOW_MS": "60000",
+      },
+      "secrets": ["OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_BASE_URL"],
+    },
+  },
 }
