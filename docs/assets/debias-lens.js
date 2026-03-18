@@ -1,12 +1,10 @@
 const TEMPERATURES = [0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 const NUM_INTERVENTION_SAMPLES = 5;
+const CHAT_ENDPOINT = `${window.location.origin}/chat`;
 
 const el = {
-  workerUrl: document.getElementById('workerUrl'),
-  appToken: document.getElementById('appToken'),
   question: document.getElementById('question'),
   runBtn: document.getElementById('runBtn'),
-  stopBtn: document.getElementById('stopBtn'),
   generationStatus: document.getElementById('generationStatus'),
   clusteringStatus: document.getElementById('clusteringStatus'),
   interventionStatus: document.getElementById('interventionStatus'),
@@ -29,16 +27,6 @@ const state = {
   finalAnswer: null,
   finalCausalWeight: null
 };
-
-function loadSavedConfig() {
-  el.workerUrl.value = localStorage.getItem('debias.workerUrl') || '';
-  el.appToken.value = localStorage.getItem('debias.appToken') || '';
-}
-
-function persistConfig() {
-  localStorage.setItem('debias.workerUrl', el.workerUrl.value.trim());
-  localStorage.setItem('debias.appToken', el.appToken.value);
-}
 
 function setStatus(node, status) {
   node.textContent = status;
@@ -73,12 +61,6 @@ function resetView() {
   renderSots();
 }
 
-function normalizeUrl(url) {
-  const trimmed = url.trim();
-  if (!trimmed) return '';
-  return trimmed.endsWith('/chat') ? trimmed : `${trimmed.replace(/\/$/, '')}/chat`;
-}
-
 function assertRun(token) {
   if (!state.isRunning || token !== state.runToken) {
     throw new Error('Pipeline stopped');
@@ -87,16 +69,9 @@ function assertRun(token) {
 
 async function callChatAPI(prompt, systemPrompt, token) {
   assertRun(token);
-  const workerUrl = normalizeUrl(el.workerUrl.value);
-  if (!workerUrl) {
-    throw new Error('Worker URL is required');
-  }
-
   const headers = { 'Content-Type': 'application/json' };
-  const appToken = el.appToken.value;
-  if (appToken) headers['X-App-Token'] = appToken;
 
-  const res = await fetch(workerUrl, {
+  const res = await fetch(CHAT_ENDPOINT, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -343,7 +318,6 @@ function renderSots() {
 function setRunningUI(running) {
   state.isRunning = running;
   el.runBtn.disabled = running;
-  el.stopBtn.disabled = !running;
   el.runBtn.classList.toggle('opacity-60', running);
 }
 
@@ -372,8 +346,6 @@ function createEmptySot(id, temperature) {
 async function runPipeline() {
   const question = el.question.value.trim();
   if (!question || state.isRunning) return;
-
-  persistConfig();
   resetView();
 
   const token = ++state.runToken;
@@ -522,21 +494,11 @@ async function runPipeline() {
   }
 }
 
-function stopPipeline() {
-  state.runToken += 1;
-  setRunningUI(false);
-}
-
 el.runBtn.addEventListener('click', runPipeline);
-el.stopBtn.addEventListener('click', stopPipeline);
 el.question.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  if (e.key === 'Enter') {
     e.preventDefault();
     runPipeline();
   }
 });
-el.workerUrl.addEventListener('change', persistConfig);
-el.appToken.addEventListener('change', persistConfig);
-
-loadSavedConfig();
 resetView();
