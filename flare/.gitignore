@@ -1,0 +1,10 @@
+node_modules/
+.svelte-kit/
+.wrangler/
+.build/
+build/
+.DS_Store
+.env
+.env.*
+!.env.example
+!.env.production.example

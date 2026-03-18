@@ -1,0 +1,261 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind 4 Theme Configuration */
+@theme {
+  /* Custom Colors */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --color-accent-cyan: #06b6d4;
+  --color-accent-cyan-light: #22d3ee;
+  --color-accent-cyan-dark: #0891b2;
+
+  --color-accent-purple: #a855f7;
+  --color-accent-purple-light: #c084fc;
+  --color-accent-purple-dark: #9333ea;
+
+  --color-accent-emerald: #10b981;
+  --color-accent-emerald-light: #34d399;
+  --color-accent-emerald-dark: #059669;
+
+  /* Custom Shadows */
+  --shadow-glow-sm: 0 0 10px rgba(59, 130, 246, 0.5);
+  --shadow-glow-md: 0 0 20px rgba(59, 130, 246, 0.5);
+  --shadow-glow-lg: 0 0 30px rgba(59, 130, 246, 0.5);
+  --shadow-neural: 0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(168, 85, 247, 0.2);
+
+  /* Custom Animations */
+  --animate-gradient: gradient 8s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+
+  @keyframes gradient {
+    0%,
+    100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes glow {
+    0% {
+      box-shadow:
+        0 0 5px rgba(59, 130, 246, 0.5),
+        0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    100% {
+      box-shadow:
+        0 0 20px rgba(59, 130, 246, 0.8),
+        0 0 40px rgba(59, 130, 246, 0.4);
+    }
+  }
+}
+
+/* AI Platform Theme - Global Styles */
+:root {
+  --neural-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #a855f7 100%);
+  --glow-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-linear-to-b from-blue-400 to-blue-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply from-blue-500 to-blue-700;
+}
+
+/* Body background with subtle pattern */
+body {
+  @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-primary-500/30 text-primary-900 dark:text-primary-100;
+}
+
+/* Glassmorphism utility class */
+.glass {
+  @apply bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50;
+}
+
+.glass-strong {
+  @apply bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border border-gray-200/60 dark:border-gray-700/60;
+}
+
+/* Neural network effect backgrounds */
+.neural-bg {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #a855f7 100%);
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Animated gradient text */
+.gradient-text {
+  @apply bg-linear-to-r from-primary-500 via-accent-cyan to-accent-purple bg-clip-text text-transparent;
+  background-size: 200% auto;
+  animation: gradient 3s linear infinite;
+}
+
+/* Glow effect for cards and buttons */
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4, #a855f7);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::before {
+  opacity: 1;
+}
+
+/* (removed duplicate @keyframes float; defined in @theme above) */
+
+/* Shimmer effect for loading states */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Neural connection lines animation */
+@keyframes neural-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.neural-line {
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 ease-out;
+  transform: translateY(0);
+}
+
+.card-hover:hover {
+  @apply shadow-neural;
+  transform: translateY(-4px);
+}
+
+/* Button pulse effect */
+@keyframes button-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.btn-pulse {
+  animation: button-pulse 2s infinite;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* Responsive font sizing */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

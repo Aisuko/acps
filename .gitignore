@@ -78,6 +78,10 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Keep Svelte app library source under flare tracked (overrides the generic lib/ rule above)
+!flare/src/lib/
+!flare/src/lib/**
+
 # IPython
 profile_default/
 ipython_config.py
