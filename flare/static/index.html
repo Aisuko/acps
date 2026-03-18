@@ -199,31 +199,35 @@
           class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center"
         >
           <div class="space-y-8">
-            <div
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-blue-200 dark:border-blue-800 shadow-sm"
-            >
-              <span class="relative flex h-2 w-2">
+            <div class="flex flex-wrap items-center gap-3">
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-blue-200 dark:border-blue-800 shadow-sm"
+              >
+                <span class="relative flex h-2 w-2">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+                  ></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-primary-700 dark:text-primary-300 font-semibold text-sm"
+                  >EACL 2026 Findings</span
+                >
+                <span class="text-gray-500 dark:text-gray-400 text-sm">·</span>
+                <span class="text-gray-600 dark:text-gray-400 text-sm"
+                  >Published 04 Jan 2026</span
+                >
+              </div>
+              <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 dark:bg-emerald-900/30 border border-emerald-300/70 dark:border-emerald-700/70 shadow-sm"
+              >
                 <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
-                ></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span class="text-primary-700 dark:text-primary-300 font-semibold text-sm"
-                >EACL 2026 Findings</span
-              >
-              <span class="text-gray-500 dark:text-gray-400 text-sm">·</span>
-              <span class="text-gray-600 dark:text-gray-400 text-sm">Published 04 Jan 2026</span>
-            </div>
-            <div
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 dark:bg-emerald-900/30 border border-emerald-300/70 dark:border-emerald-700/70 shadow-sm"
-            >
-              <span
-                class="text-emerald-700 dark:text-emerald-300 text-xs font-semibold uppercase tracking-wide"
-                >New</span
-              >
-              <span class="text-emerald-800 dark:text-emerald-200 text-sm"
-                >Interactive Debias Lens Playground is live</span
-              >
+                  class="text-emerald-700 dark:text-emerald-300 text-xs font-semibold uppercase tracking-wide"
+                  >New</span
+                >
+                <span class="text-emerald-800 dark:text-emerald-200 text-sm"
+                  >Interactive Debias Lens Playground is live</span
+                >
+              </div>
             </div>
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
               <span class="gradient-text">Debiasing LLMs</span>
@@ -402,10 +406,10 @@
                 <p
                   class="text-xs uppercase tracking-wide font-semibold text-emerald-700 dark:text-emerald-300"
                 >
-                  Playground Quick Start
+                  Playground Guide
                 </p>
                 <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-1">
-                  Try Debias Lens In 3 Steps
+                  Run Debias Lens Directly On This Site
                 </h2>
                 <div class="grid md:grid-cols-3 gap-3 mt-5 text-sm">
                   <div
@@ -413,15 +417,15 @@
                   >
                     <p class="font-bold text-gray-900 dark:text-white">1. Open Playground</p>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">
-                      Go to the interactive page and keep this paper site unchanged.
+                      Open the Debias Lens page from this site using the main action button.
                     </p>
                   </div>
                   <div
                     class="rounded-xl bg-white/80 dark:bg-gray-900/50 border border-gray-200/70 dark:border-gray-700/70 p-4"
                   >
-                    <p class="font-bold text-gray-900 dark:text-white">2. Paste Worker URL</p>
+                    <p class="font-bold text-gray-900 dark:text-white">2. Use Default Input</p>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">
-                      Use your Cloudflare Worker endpoint ending in /chat.
+                      Keep the prefilled question or replace it with your own prompt.
                     </p>
                   </div>
                   <div
@@ -429,7 +433,7 @@
                   >
                     <p class="font-bold text-gray-900 dark:text-white">3. Run A Question</p>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">
-                      Watch generation, clustering, intervention, and causal voting.
+                      Click Run Pipeline to see generation, clustering, intervention, and voting.
                     </p>
                   </div>
                 </div>
@@ -1237,7 +1241,7 @@
                 <a
                   class="text-gray-400 hover:text-primary-400 transition-colors"
                   href="#playground-guide"
-                  >Playground Quick Start</a
+                  >Playground Guide</a
                 >
               </li>
               <li>
