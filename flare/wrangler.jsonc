@@ -10,5 +10,19 @@
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "RATE_LIMIT_REQUESTS": "10",
+        "RATE_LIMIT_WINDOW_MS": "60000"
+      }
+    },
+    "staging": {
+      "vars": {
+        "RATE_LIMIT_REQUESTS": "50",
+        "RATE_LIMIT_WINDOW_MS": "60000"
+      }
+    }
   }
 }

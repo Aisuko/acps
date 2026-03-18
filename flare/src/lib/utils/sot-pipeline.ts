@@ -20,19 +20,7 @@ export async function callChatAPI(prompt: string, systemPrompt?: string): Promis
     throw new Error(`API error: ${res.status}`);
   }
 
-  // Read the streaming response
-  const reader = res.body?.getReader();
-  if (!reader) throw new Error('No response body');
-
-  const decoder = new TextDecoder();
-  let result = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    result += decoder.decode(value, { stream: true });
-  }
-
+  const result = await res.text();
   return result.trim();
 }
 
