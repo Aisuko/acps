@@ -42,7 +42,8 @@
 }
 
 @keyframes gradient {
-  0%, 100% {
+  0%,
+  100% {
     background-size: 200% 200%;
     background-position: left center;
   }
@@ -53,7 +54,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -63,31 +65,51 @@
 
 @keyframes glow {
   0% {
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow:
+      0 0 5px rgba(59, 130, 246, 0.5),
+      0 0 20px rgba(59, 130, 246, 0.3);
   }
   100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4);
+    box-shadow:
+      0 0 20px rgba(59, 130, 246, 0.8),
+      0 0 40px rgba(59, 130, 246, 0.4);
   }
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes neural-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes button-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
 }
 
 @keyframes ping {
-  75%, 100% {
+  75%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
@@ -125,11 +147,18 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  ::selection { color: #dbeafe; }
+  ::selection {
+    color: #dbeafe;
+  }
 }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background-color: #f3f4f6; }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+}
 ::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to bottom, #60a5fa, #2563eb);
   border-radius: 9999px;
@@ -151,8 +180,14 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  .glass { background: rgba(17, 24, 39, 0.7); border-color: rgba(55, 65, 81, 0.5); }
-  .glass-strong { background: rgba(17, 24, 39, 0.9); border-color: rgba(55, 65, 81, 0.6); }
+  .glass {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(55, 65, 81, 0.5);
+  }
+  .glass-strong {
+    background: rgba(17, 24, 39, 0.9);
+    border-color: rgba(55, 65, 81, 0.6);
+  }
 }
 
 .neural-bg {
@@ -197,7 +232,9 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.glow-effect:hover::before { opacity: 1; }
+.glow-effect:hover::before {
+  opacity: 1;
+}
 
 .shimmer {
   position: relative;
@@ -207,12 +244,17 @@ body {
 .shimmer::after {
   content: '';
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   animation: shimmer 2s infinite;
 }
 
-.neural-line { animation: neural-pulse 2s ease-in-out infinite; }
+.neural-line {
+  animation: neural-pulse 2s ease-in-out infinite;
+}
 
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -224,7 +266,9 @@ body {
   transform: translateY(-6px);
 }
 
-.btn-pulse { animation: button-pulse 2s infinite; }
+.btn-pulse {
+  animation: button-pulse 2s infinite;
+}
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -236,21 +280,35 @@ body {
 
 :focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-primary-500), 0 0 0 4px #ffffff;
+  box-shadow:
+    0 0 0 2px var(--color-primary-500),
+    0 0 0 4px #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :focus-visible { box-shadow: 0 0 0 2px var(--color-primary-500), 0 0 0 4px #030712; }
+  :focus-visible {
+    box-shadow:
+      0 0 0 2px var(--color-primary-500),
+      0 0 0 4px #030712;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track { background-color: #111827; }
+  ::-webkit-scrollbar-track {
+    background-color: #111827;
+  }
 }
 
-@media (max-width: 640px) { html { font-size: 14px; } }
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

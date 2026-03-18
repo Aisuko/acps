@@ -13,10 +13,11 @@
 - Licenses: MIT (code) · CC BY 4.0 (paper)
 
 ## TL;DR
+
 ACPS adaptively routes between standard and conditional front-door adjustments and uses concise Sketch-of-Thought mediators to deliver robust, token-efficient reasoning across diverse tasks.
 
-
 ## Repository Map
+
 - `acps/` — Task-specific ACPS notebooks (CommonsenseQA, FEVER, HotpotQA, GSM8K, Math, StrategyQA, MusiQue).
 - `acps.ipynb` — End-to-end ACPS pipeline (routing, mediator construction, evaluation).
 - `helpers/` — Sketch-of-Thought utilities, encoder fine-tuning, prompt templates, metrics collection.
@@ -28,6 +29,7 @@ ACPS adaptively routes between standard and conditional front-door adjustments a
 - `CITATION.cff` — Citation metadata.
 
 ## Environment & Usage
+
 - Verified in a Kaggle `Python 3.11.13` GPU container. The dependency list is heavy; trim it if you only need specific notebooks.
 - Quickstart:
   1. Open a Kaggle notebook (GPU recommended) and set Python 3.11.13.
@@ -37,6 +39,7 @@ ACPS adaptively routes between standard and conditional front-door adjustments a
 - Outputs are notebook-driven; no standalone Python package is provided yet.
 
 ## Citation
+
 Use `CITATION.cff` or the BibTeX below.
 
 ```bibtex
@@ -51,4 +54,5 @@ Use `CITATION.cff` or the BibTeX below.
 ```
 
 ## License
+
 MIT License for code; paper content under CC BY 4.0.

@@ -4,7 +4,7 @@ function buildCorsHeaders(origin, allowedOrigin) {
     'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': 'POST,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
-    Vary: 'Origin'
+    Vary: 'Origin',
   };
 }
 
@@ -20,8 +20,8 @@ function jsonResponse(data, status, headers = {}) {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      ...headers
-    }
+      ...headers,
+    },
   });
 }
 
@@ -40,7 +40,7 @@ export default {
     if (request.method === 'OPTIONS') {
       return new Response(null, {
         status: 204,
-        headers: buildCorsHeaders(origin, allowedOrigin)
+        headers: buildCorsHeaders(origin, allowedOrigin),
       });
     }
 
@@ -103,16 +103,16 @@ export default {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: env.OPENAI_MODEL,
         stream: false,
         messages: [
           ...(systemPrompt ? [{ role: 'system', content: systemPrompt }] : []),
-          { role: 'user', content: message }
-        ]
-      })
+          { role: 'user', content: message },
+        ],
+      }),
     });
 
     if (!upstreamRes.ok) {
@@ -121,8 +121,8 @@ export default {
         status: upstreamRes.status,
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
-          ...buildCorsHeaders(origin, allowedOrigin)
-        }
+          ...buildCorsHeaders(origin, allowedOrigin),
+        },
       });
     }
 
@@ -133,8 +133,8 @@ export default {
       status: 200,
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
-        ...buildCorsHeaders(origin, allowedOrigin)
-      }
+        ...buildCorsHeaders(origin, allowedOrigin),
+      },
     });
-  }
+  },
 };

@@ -15,7 +15,7 @@ const el = {
   finalWeight: document.getElementById('finalWeight'),
   votingList: document.getElementById('votingList'),
   clusterList: document.getElementById('clusterList'),
-  sotList: document.getElementById('sotList')
+  sotList: document.getElementById('sotList'),
 };
 
 const state = {
@@ -25,7 +25,7 @@ const state = {
   clusters: [],
   votingResults: [],
   finalAnswer: null,
-  finalCausalWeight: null
+  finalCausalWeight: null,
 };
 
 function setStatus(node, status) {
@@ -76,8 +76,8 @@ async function callChatAPI(prompt, systemPrompt, token) {
     headers,
     body: JSON.stringify({
       message: prompt,
-      options: systemPrompt ? { systemPrompt } : {}
-    })
+      options: systemPrompt ? { systemPrompt } : {},
+    }),
   });
 
   if (!res.ok) {
@@ -147,8 +147,7 @@ function kMeans(points, k, maxIterations = 20) {
       const clusterPoints = points.filter((_, i) => assignments[i] === c);
       if (clusterPoints.length) {
         for (let d = 0; d < dims; d++) {
-          centroids[c][d] =
-            clusterPoints.reduce((sum, p) => sum + p[d], 0) / clusterPoints.length;
+          centroids[c][d] = clusterPoints.reduce((sum, p) => sum + p[d], 0) / clusterPoints.length;
         }
       }
     }
@@ -163,7 +162,7 @@ function extractNumericAnswer(response) {
     /(?:final\s+)?answer[:\s]+(?:is\s+)?(\d+(?:\.\d+)?)/i,
     /(?:total|altogether|sum)[:\s]+(?:is\s+)?(\d+(?:\.\d+)?)/i,
     /=\s*(\d+(?:\.\d+)?)\s*$/m,
-    /(\d+(?:\.\d+)?)\s*$/i
+    /(\d+(?:\.\d+)?)\s*$/i,
   ];
 
   for (const p of patterns) {
@@ -178,8 +177,7 @@ async function interveneAndAnswer(question, sot, numSamples, token) {
   const answers = [];
   const systemPrompt =
     'You are an expert math problem solver. Solve step by step and always end with: #### [number]';
-  const prompt =
-    `Solve this math word problem step by step.\n\nUse this reasoning approach as a guide: ${sot}\n\nProblem: "${question}"\n\nEnd with #### followed by only the numeric answer.`;
+  const prompt = `Solve this math word problem step by step.\n\nUse this reasoning approach as a guide: ${sot}\n\nProblem: "${question}"\n\nEnd with #### followed by only the numeric answer.`;
 
   for (let i = 0; i < numSamples; i++) {
     assertRun(token);
@@ -207,7 +205,7 @@ async function interveneAndAnswer(question, sot, numSamples, token) {
   return {
     answers,
     correctCount: maxCount,
-    mostCommonAnswer
+    mostCommonAnswer,
   };
 }
 
@@ -223,7 +221,7 @@ function aggregateVotes(sots) {
     const prev = voteMap.get(sot.mostCommonAnswer) || {
       weight: 0,
       contributors: [],
-      terms: []
+      terms: [],
     };
 
     prev.weight += causalWeight;
@@ -237,7 +235,7 @@ function aggregateVotes(sots) {
       answer,
       causalWeight: data.weight,
       contributingSots: data.contributors,
-      calculation: `${data.terms.join(' + ')} = ${data.weight.toFixed(4)}`
+      calculation: `${data.terms.join(' + ')} = ${data.weight.toFixed(4)}`,
     }))
     .sort((a, b) => b.causalWeight - a.causalWeight);
 }
@@ -250,9 +248,10 @@ function renderVoting() {
 
   el.votingList.innerHTML = state.votingResults
     .map((item, index) => {
-      const winner = index === 0
-        ? '<span class="ml-2 inline-block text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">winner</span>'
-        : '';
+      const winner =
+        index === 0
+          ? '<span class="ml-2 inline-block text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">winner</span>'
+          : '';
       return `
         <div class="p-3 rounded-lg border ${index === 0 ? 'border-green-300 bg-green-50/60' : 'border-gray-200 dark:border-gray-700'}">
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -274,14 +273,16 @@ function renderClusters() {
   }
 
   el.clusterList.innerHTML = state.clusters
-    .map((c) => `
+    .map(
+      (c) => `
       <div class="p-3 rounded-lg border ${c.isCentral ? 'border-blue-300 bg-blue-50/60' : 'border-gray-200 dark:border-gray-700'}">
         <div class="font-semibold">Cluster ${c.id} ${c.isCentral ? '(central)' : ''}</div>
         <p class="text-xs mt-1">size=${c.size}/${c.totalSots}, P(r|X)=${c.pRgivenX.toFixed(3)}</p>
         <p class="text-xs mt-1">dominant=${c.dominantAnswer || '-'}, P(A|do(r))=${c.pAgivenDoR == null ? '-' : c.pAgivenDoR.toFixed(3)}</p>
         <p class="text-xs mt-1">SoTs: ${c.sotIds.join(', ')}</p>
       </div>
-    `)
+    `
+    )
     .join('');
 }
 
@@ -296,12 +297,14 @@ function escapeHtml(text) {
 
 function renderSots() {
   if (!state.sots.length) {
-    el.sotList.innerHTML = '<p class="text-gray-500 dark:text-gray-400">No reasoning paths yet.</p>';
+    el.sotList.innerHTML =
+      '<p class="text-gray-500 dark:text-gray-400">No reasoning paths yet.</p>';
     return;
   }
 
   el.sotList.innerHTML = state.sots
-    .map((s) => `
+    .map(
+      (s) => `
       <div class="p-3 rounded-lg border ${s.isInCentralCluster ? 'border-indigo-300 bg-indigo-50/60' : 'border-gray-200 dark:border-gray-700'}">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="font-semibold">${s.id} [T=${s.temperature.toFixed(2)}]</div>
@@ -311,7 +314,8 @@ function renderSots() {
         <p class="mt-2 text-sm whitespace-pre-wrap">${escapeHtml(s.text || '(pending)')}</p>
         <p class="text-xs mt-2 text-gray-600 dark:text-gray-400">mostCommonAnswer=${s.mostCommonAnswer || '-'}</p>
       </div>
-    `)
+    `
+    )
     .join('');
 }
 
@@ -339,7 +343,7 @@ function createEmptySot(id, temperature) {
     answers: [],
     mostCommonAnswer: '',
     correctCount: 0,
-    totalSamples: 0
+    totalSamples: 0,
   };
 }
 
@@ -401,7 +405,7 @@ async function runPipeline() {
       isCentral: id === centralClusterId,
       sotIds: clusterSotIds.get(id) || [],
       dominantAnswer: null,
-      pAgivenDoR: null
+      pAgivenDoR: null,
     }));
 
     for (let i = 0; i < state.sots.length; i++) {
@@ -435,7 +439,9 @@ async function runPipeline() {
     }
 
     for (const cluster of state.clusters) {
-      const clusterSots = state.sots.filter((s) => s.clusterId === cluster.id && s.isInCentralCluster);
+      const clusterSots = state.sots.filter(
+        (s) => s.clusterId === cluster.id && s.isInCentralCluster
+      );
       if (!clusterSots.length) continue;
 
       const answerCounts = new Map();
@@ -468,7 +474,7 @@ async function runPipeline() {
         pAgivenDoR: s.pAgivenDoR,
         mostCommonAnswer: s.mostCommonAnswer,
         isInCentralCluster: s.isInCentralCluster,
-        clusterId: s.clusterId
+        clusterId: s.clusterId,
       }))
     );
 

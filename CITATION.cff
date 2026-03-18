@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-title: "Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought (ACPS)"
+message: 'If you use this software, please cite it as below.'
+title: 'Debiasing Large Language Models via Adaptive Causal Prompting with Sketch-of-Thought (ACPS)'
 authors:
   - family-names: Li
     given-names: Bowen
@@ -18,10 +18,10 @@ authors:
     given-names: Yongli
   - family-names: Xia
     given-names: Feng
-version: "1.0.0"
+version: '1.0.0'
 date-released: 2026-01-04
 license: MIT
-url: "https://github.com/Aisuko/acps"
+url: 'https://github.com/Aisuko/acps'
 keywords:
   - Large Language Models
   - Prompting
