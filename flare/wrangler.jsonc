@@ -17,14 +17,12 @@
         "RATE_LIMIT_REQUESTS": "10",
         "RATE_LIMIT_WINDOW_MS": "60000",
       },
-      "secrets": ["OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_BASE_URL"],
     },
     "staging": {
       "vars": {
         "RATE_LIMIT_REQUESTS": "50",
         "RATE_LIMIT_WINDOW_MS": "60000",
       },
-      "secrets": ["OPENAI_API_KEY", "OPENAI_MODEL", "OPENAI_BASE_URL"],
     },
   },
 }
